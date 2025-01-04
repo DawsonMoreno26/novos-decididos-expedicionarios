@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novos Decididos</title>
+    <style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(to right, rgb(0, 100, 0), rgb(47,79,79));
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center; /* Alinha o conteúdo no topo flex-start */
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    overflow: auto;
+}
+
+.box {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;/* O zoom começa no topo */
+    margin-top: 0;/* Garante que não há margem acima da box */
+}
+
+/* Outros estilos de formatação (não precisam de alterações) */
+fieldset {
+    border: 0.18rem solid rgb(0,128,0);
+}
+
+legend {
+    border: 0.1rem solid rgb(0,128,0);
+    padding: 1rem;
+    text-align: center;
+    background-color: rgb(0,128,0);
+    border-radius: 0.8rem;
+}
+
+.inputBox {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.inputUser {
+    background: none;
+    border: none;
+    border-bottom: 0.1rem solid white;
+    outline: none;
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+    letter-spacing: 0.1rem;
+}
+
+.labelInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.inputUser:focus ~ .labelInput,
+.inputUser:not(:placeholder-shown) ~ .labelInput {
+    top: -1.5rem;
+    font-size: 0.9rem;
+    color: dodgerblue;
+}
+
+#selectculto, #selectperfil {
+    border: none;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    outline: none;
+    font-size: 1rem;
+    width: 85%;
+    background-image: linear-gradient(to right, rgb(0, 100, 0), rgb(47,79,79));
+    color: aliceblue;
+}
+
+option {
+    background-color: rgb(17, 54, 71);
+}
+
+#submit {
+    background-image: linear-gradient(to right, rgb(0, 100, 0), rgb(47,79,79));
+    width: 100%;
+    border: none;
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+#submit:hover {
+    background-image: linear-gradient(to right, rgb(0, 100, 0), rgb(47,79,79));
+}
+
+select, input[type="radio"], label {
+    font-size: 1rem;
+}
+
+p {
+    margin-bottom: 0.5rem;
+}
+
+    </style>
+    <script>
+        async function enviarFormulario() {
+            const culto = document.getElementById('selectculto').value;
+            const nome = document.getElementById('nome').value;
+            const bairro = document.getElementById('bairro').value;
+            const telefone = document.getElementById('telefone').value;
+            const genero = document.querySelector('input[name="genero"]:checked').value;
+            const apelo = document.querySelector('input[name="apelo"]:checked').value;
+            const perfil = document.getElementById('selectperfil').value;
+            const voluntario = document.getElementById('voluntario').value;
+            const gcobs = document.getElementById('gcobs').value;
+
+            const data = {
+                culto,
+                nome,
+                bairro,
+                telefone,
+                genero,
+                apelo,
+                perfil,
+                voluntario,
+                gcobs
+            };
+
+            try {
+                const response = await fetch('URL_DO_SEU_WEB_APP', { // Substitua pela URL do seu Web App
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro no envio: ${response.statusText}`);
+                }
+
+                alert('Dados enviados com sucesso!');
+                document.getElementById('productForm').reset();
+            } catch (error) {
+                alert('Erro ao enviar os dados: ' + error.message);
+                console.error(error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="box">
+        <form id="productForm">
+            <fieldset>
+                <legend onclick="window.open('https://docs.google.com/spreadsheets/d/1u_pZ5WEiyQWQHzbJ5D16SIHExY62m7ZCk9sQ_hve9CY/edit?gid=0#gid=0', '_blank');" style="cursor: pointer; color: white;">
+                <b>Novos Decididos</b>
+                </legend>
+                <br>
+                <div class="inputBox">
+                    <label for="selectculto"><b>Culto:</b></label>
+                    <select name="selectculto" id="selectculto" required>
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="Domingo Manhã">Domingo Manhã</option>
+                        <option value="Domingo Noite">Domingo Noite</option>
+                        <option value="Quartas de Esperança">Quartas de Esperança</option>
+                        <option value="Start">Start</option>
+                        <option value="Xtreme">Xtreme</option>
+                        <option value="50+">50+</option>
+                        <option value="Pink Power">Pink Power</option>
+                        <option value="Power Man">Power Man</option>
+                        <option value="Culto de Casais">Culto de Casais</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div> <br>
+                <div class="inputBox"> 
+                    <input type="text" name="nome" id="nome" class="inputUser" placeholder=" " required>
+                    <label for="nome" class="labelInput">Nome e Sobrenome</label>
+                </div> <br>
+                <div class="inputBox">
+                    <input type="text" name="bairro" id="bairro" class="inputUser" placeholder=" " required>
+                    <label for="bairro" class="labelInput">Bairro</label>
+                </div> <br>
+                <div class="inputBox">
+                    <input type="tel" name="telefone" id="telefone" class="inputUser" placeholder=" " required>
+                    <label for="telefone" class="labelInput">Telefone com DDD</label>
+                </div>
+                <p><b>Gênero</b></p>
+                <input type="radio" id="feminino" name="genero" value="feminino" required>
+                <label for="feminino">Feminino</label><br>
+                <input type="radio" id="masculino" name="genero" value="masculino" required>
+                <label for="masculino">Masculino</label><br> <br>
+                <p><b>Solicitação ao Apelo</b></p>
+                <input type="radio" id="Novo Convertido" name="apelo" value="NC" required>
+                <label for="feminino">Novo Convertido</label><br>
+                <input type="radio" id="Reconciliação" name="apelo" value="RC" required>
+                <label for="masculino">Reconciliação</label><br>
+                <input type="radio" id="Pré Culto" name="apelo" value="PC" required>
+                <label for="masculino">Pré Culto</label><br> <br>
+
+                <div class="inputBox">
+                    <label for="selectperfil"><b>Perfil:</b></label>
+                    <select name="selectperfil" id="selectperfil" required>
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="solteirojovem">Solteiro(a) Jovem</option>
+                        <option value="solteiro+40">Solteiro(a) +40 anos</option>
+                        <option value="casado(a)">Casado(a)</option>
+                        <option value="Adolescente">Adolescente</option>
+                        <option value="Online">On line</option>
+                        <option value="50+">50+</option>
+                    </select>
+                    <br><br><br>
+                  </div>
+                <div class="inputBox">
+                    <input type="text" name="voluntario" id="voluntario" class="inputUser" placeholder=" " required>
+                    <label for="voluntario" class="labelInput">Voluntário</label>
+                </div> <br>
+                <div class="inputBox">
+                    <input type="text" name="gcobs" id="gcobs" class="inputUser" placeholder=" ">
+                    <label for="gcobs" class="labelInput">GC Direcionado | Observações</label>
+                </div>
+              <br>
+              <input type="button" name="submit" id="submit" onclick="enviarFormulario()" value="Enviar">
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
